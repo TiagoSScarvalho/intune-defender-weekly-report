@@ -1,0 +1,15 @@
+name: Offline PowerShell tests
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run synthetic regression tests
+        shell: pwsh
+        run: ./tests/Run-Tests.ps1
